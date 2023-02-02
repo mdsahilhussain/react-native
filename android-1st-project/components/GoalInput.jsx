@@ -1,26 +1,44 @@
 import React, { useState } from "react";
 
-import { StyleSheet, View, TextInput, Button } from "react-native";
+import { StyleSheet, View, TextInput, Button, Modal } from "react-native";
 
-const GoalInput = ({ onAddGoal }) => {
+const GoalInput = ({ onAddGoal, isShow }) => {
   const [enterGoals, setEnterGoals] = useState("");
 
-  const goalsInputHandler = (enterGoals) => {
-    setEnterGoals(enterGoals);
+  const clearInputHandler = () => {
+    setEnterGoals("");
   };
+
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        placeholder="Enter your today goals"
-        style={styles.inputField}
-        onChangeText={goalsInputHandler}
-      />
-      <Button
-        style={styles.addButton}
-        title="Add"
-        onPress={onAddGoal.bind(this, enterGoals)}
-      />
-    </View>
+    <Modal visible={isShow} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Enter your today goals"
+          style={styles.inputField}
+          value={enterGoals}
+          onChangeText={(text) => setEnterGoals(text)}
+        />
+        <View style={styles.inputButtonContainer}>
+          <View style={styles.inputButton}>
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={() => {
+                onAddGoal(enterGoals), clearInputHandler();
+              }}
+            />
+          </View>
+          <View style={styles.inputButton}>
+            <Button
+              title="Add"
+              onPress={() => {
+                onAddGoal(enterGoals), clearInputHandler();
+              }}
+            />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
@@ -29,19 +47,29 @@ export default GoalInput;
 const styles = StyleSheet.create({
   inputContainer: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 16,
   },
 
   inputField: {
     color: "black",
-    paddingVertical: 1,
-    paddingHorizontal: 5,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    fontSize: 18,
     borderWidth: 0.5,
     borderRadius: 5,
-    flex: 1,
-    marginRight: 5,
+    width: "90%",
+    marginBottom: 16,
+  },
+
+  inputButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "88%",
+  },
+
+  inputButton: {
+    width: "48%",
   },
 });
