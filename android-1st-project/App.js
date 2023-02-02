@@ -10,20 +10,21 @@ export default function App() {
   const [addMode, setAddMode] = useState(false);
 
   const addHandler = (enterGoals) => {
-    if (enterGoals.trim() !== "") {
-      setGoalsList((currentGoals) => [
-        ...currentGoals,
-        {
-          id: goalsList.length + 1,
-          task: enterGoals,
-        },
-      ]);
+    if (enterGoals.trim() === "") {
+      return;
     }
+    setGoalsList((currentGoals) => [
+      ...currentGoals,
+      {
+        id: goalsList.length + 1,
+        task: enterGoals,
+      },
+    ]);
+
     setAddMode(false);
   };
 
   const goalsRemoveHandler = (id) => {
-    console.log(id);
     setGoalsList((currentGoals) => {
       return currentGoals.filter((goals) => goals.id !== id);
     });
