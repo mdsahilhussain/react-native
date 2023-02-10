@@ -13,6 +13,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "grey",
     borderBottomWidth: 1,
     marginVertical: 10,
-    fontSize:18
+    fontSize: 18,
   },
 });

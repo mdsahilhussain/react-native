@@ -2,8 +2,12 @@ import { StyleSheet, View, Text } from "react-native";
 import React from "react";
 import { ColorSet } from "../constants";
 
-const Card = props => {
-  return <View style={{ ...styles.cardContainer, ...props.style }}>{props.children}</View>;
+const Card = (props) => {
+  return (
+    <View style={{ ...styles.cardContainer, ...props.style }}>
+      {props.children}
+    </View>
+  );
 };
 
 export default Card;
@@ -20,7 +24,7 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 16,
     paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingVertical: 32,
     borderRadius: 8,
   },
 });
