@@ -5,6 +5,8 @@ import {
   Button,
   Alert,
   ScrollView,
+  FlatList,
+  Dimensions,
 } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import { Card, NumberCard } from "../components";
@@ -32,6 +34,13 @@ const renderListItem = (value, index, numOfRound) => {
   </View>;
 };
 
+// const renderListItem = (listLenght, itemData) => {
+//   <View  styles={styles.listItem}>
+//     <Text>#{listLenght - itemData.index}</Text>
+//     <Text>{itemData.item}</Text>
+//   </View>;
+// };
+
 const GameScreen = (props) => {
   const { chooesNumber, onGameOver } = props;
   const initialGuess = genraterRandomNumber(1, 100, chooesNumber);
@@ -40,6 +49,7 @@ const GameScreen = (props) => {
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
   const [pastGuess, setPastGuess] = useState([initialGuess]);
+
   useEffect(() => {
     if (currentGuess === chooesNumber) {
       onGameOver(pastGuess.length);
@@ -69,6 +79,15 @@ const GameScreen = (props) => {
     setCurrentGuess(nextNumber);
     setPastGuess((prevGuess) => [nextNumber, ...prevGuess]);
   };
+
+  // if (Dimensions.get("window").height > 600) {
+  //   return <View></View>;
+  // }
+
+  // if (Dimensions.get("window").width < 360) {
+  //   listContainer = styles.listContainerBig;
+  // }
+
   return (
     <View style={styles.gamescreen}>
       <Card style={styles.card}>
@@ -93,9 +112,18 @@ const GameScreen = (props) => {
           </View>
         </View>
       </Card>
-      <ScrollView>
-        {pastGuess.map((guess, index) => renderListItem(guess, index))}
-      </ScrollView>
+      <View style={styles.listContainer}>
+        <ScrollView contentContainerStyle={styles.list}>
+          {pastGuess.map((guess, index) => renderListItem(guess, index))}
+        </ScrollView>
+      </View>
+
+      {/* <FlatList
+          keyExtractor={(item) => item}
+          data={pastGuess}
+          renderItem={renderListItem.bind(this, pastGuess.length)}
+          contentContainerStyle={styles.list}
+        /> */}
     </View>
   );
 };
@@ -118,19 +146,37 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     flexDirection: "row",
-    width: "100%",
+    width: 400,
+    maxWidth: "100%",
     justifyContent: "space-between",
     paddingHorizontal: 15,
-    marginTop: 16,
+    // marginTop: 16,
+    //! responseive
+    marginTop: Dimensions.get("window").height > 600 ? 20 : 5,
   },
   button: {
     width: 100,
   },
-  list: {
+
+  listItem: {
     borderColor: "#ccc",
     padding: 15,
     borderWidth: 1,
     marginVertical: 10,
     backgroundColor: "white",
+    width: "100%",
+  },
+
+  listContainer: {
+    flex: 1,
+    // width: "60%",
+    // ! makeing responsive
+    width: Dimensions.get("window").width > 350 ? "60%" : "80%",
+  },
+
+  list: {
+    flexGrow: 1,
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });

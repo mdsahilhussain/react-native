@@ -1,4 +1,11 @@
-import { StyleSheet, View, Text, Button, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Image,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import { Card } from "../components";
 import { ColorSet } from "../constants";
@@ -51,11 +58,13 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    width: 250,
-    height: 250,
-    borderRadius: 125,
+    width: Dimensions.get("window").width * 0.7,
+    height: Dimensions.get("window").width * 0.7,
+    //! borderRadious half of that so we divide by two
+    borderRadius: (Dimensions.get("window").width * 0.7) / 2,
     overflow: "hidden",
-    marginVertical: 16,
+    marginVertical: Dimensions.get("window").height / 20,
+    //! marginVertical value set 30
     borderWidth: 1,
   },
 
@@ -67,5 +76,15 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 16,
     width: "100%",
+  },
+  resultContainer: {
+    marginHorizontal: 30,
+    //! vertical margin to 5% of the device height(!). height/40 would set it to 2.5% EventCounts={.}
+    marginVertical: Dimensions.get("window").height / 40,
+    //! marginVertical value set 15
+  },
+  resultText: {
+    textAlign: "center",
+    fontSize: Dimensions.get("window").height < 400 ? 16 : 20,
   },
 });
